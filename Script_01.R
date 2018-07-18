@@ -6,7 +6,7 @@
 ######                                                        #####
 ###################################################################
 
-
+## seconde tentative de modification
 rm(list = ls())
 
 ### Installation des packages R
