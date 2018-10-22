@@ -6,7 +6,7 @@
 ######                                                        #####
 ###################################################################
 
-## seconde tentative de modification
+### On nnetoie notre environnement
 rm(list = ls())
 
 ### Installation des packages R
