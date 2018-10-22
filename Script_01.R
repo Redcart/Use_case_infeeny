@@ -6,7 +6,7 @@
 ######                                                        #####
 ###################################################################
 
-### On nnetoie notre environnement
+### On nettoie notre environnement
 rm(list = ls())
 
 ### Installation des packages R
