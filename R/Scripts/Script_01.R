@@ -6,7 +6,7 @@
 ######                                                        #####
 ###################################################################
 
-### On nettoie notre environnement
+
 rm(list = ls())
 
 ### Installation des packages R
@@ -66,7 +66,7 @@ apply(data, 2, function(x) any(is.na(x)))
 summary(data)
 
 # Nous disposons de 23 variables:
-  # 1 variable d'intéret que nous souhaiton sprédire: Churn
+  # 1 variable d'intéret que nous souhaitons prédire: Churn
   # 5 variables catégorielles: région, statut marital, éducation, sexe, catégorie client)
   # 11 variables indicatrices (Oui/Non) : location matériel, Internet, double appel, ...
   # 6 variables numériques: nombre de mois d'ancienneté, âge, revenu, ...
@@ -74,10 +74,6 @@ summary(data)
 ######################################################
 ### 2) Split échantillon d'apprentissage / de test ###
 ######################################################
-
-### Pour le caret package
-#levels <- unique(data$churn) 
-#data$churn <- factor(data$churn, labels=make.names(levels))
 
 set.seed(100)
 
@@ -107,9 +103,9 @@ prop.table(table(training_set$Churn))
 # Près de 28% des clients ont résilié leur contrat dans la base d'apprentissage
 
 # On peut identifier les variables impactant le risque d'attrition en:
-  # - implémentant un test du CHI deux afin tester lhypothèse nulle
-  # d'indépendance entre une vraible catégorielle et le churn
-  # - analysant la rpéartition du churn selon les variables à l'aide 
+  # - implémentant un test du CHI deux afin de tester l'hypothèse nulle
+  # d'indépendance entre une variable catégorielle et le churn
+  # - analysant la répartition du churn selon les variables à l'aide 
   # de diagrammes en barre par exemple
 
 table(training_set$Region)
