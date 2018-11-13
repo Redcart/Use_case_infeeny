@@ -9,7 +9,9 @@ a telecom company.
 
 We are provided with a data set telco.csv that contains informations about customers. 
 
-We benchmark through AUC metric two algorithms:
+We begin by doing some descriptive statistics.
+
+Then we benchmark through AUC metric two algorithms:
 - **Logistic Regression**
 - **Random Forests**
 
