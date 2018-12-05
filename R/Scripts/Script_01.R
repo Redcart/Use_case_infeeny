@@ -67,7 +67,7 @@ summary(data)
 
 # Nous disposons de 23 variables:
   # 1 variable d'intéret que nous souhaitons prédire: Churn
-  # 5 variables catégorielles: région, statut marital, éducation, sexe, catégorie client)
+  # 5 variables catégorielles: région, statut marital, éducation, sexe, catégorie client
   # 11 variables indicatrices (Oui/Non) : location matériel, Internet, double appel, ...
   # 6 variables numériques: nombre de mois d'ancienneté, âge, revenu, ...
 
@@ -106,7 +106,7 @@ prop.table(table(training_set$Churn))
   # - implémentant un test du CHI deux afin de tester l'hypothèse nulle
   # d'indépendance entre une variable catégorielle et le churn
   # - analysant la répartition du churn selon les variables à l'aide 
-  # de diagrammes en barre par exemple
+  # de diagrammes en barres par exemple
 
 table(training_set$Region)
 chisq.test(table(training_set$Churn, training_set$Region))
@@ -231,7 +231,7 @@ training_set %>%
   ggplot() +
   aes(x = CatClient, fill = Churn) +
   geom_bar(width = 0.5) +
-  ggtitle("Attrition selon le mode d'acquisition du matériel") +
+  ggtitle("Attrition selon la catégorie de clients") +
   xlab("Location du matériel") +
   ylab("Fréquence") + 
   theme_bw() +
