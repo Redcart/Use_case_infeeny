@@ -44,6 +44,7 @@ library(doMC)
 library(dummies)
 library(scales)
 library(pROC)
+library(MASS)
 
 getwd()
 
@@ -244,6 +245,34 @@ training_set %>%
 ### 4) Machine Learning  ###
 ############################
 
+###############################
+### Sélection des variables ###
+###############################
+
+### Stepwise : Backward/Forward/Both & critère AIC/BIC
+
+model <- glm(Churn ~ ., data = training_set, family = c("binomial"))
+
+model_stepwise_aic_backward <- stepAIC(model, Churn ~ ., trace = TRUE, direction = "backward")
+summary(model_stepwise_aic_backward)
+
+model <- glm(Churn ~ 1, data = training_set, family = c("binomial"))
+
+model_stepwise_aic_forward <- stepAIC(model, 
+                                      Churn ~ Region + NbMoisService + Age + StatutMarital + Adresse + Revenu
+                                      + education + NbAnneesEmployeur + Retraite + Sexe + TailleFoyer + ServiceNumVert
+                                      + LocMateriel + ServiceCarteAppel + ServiceSansFil + Internet + AffichageNumAppel
+                                      + DoubleAppel + TransfertAppel + ConfTel + PaieElectronique + CatClient, 
+                                      data = training_set, trace = TRUE, direction = "forward")
+
+summary(model_stepwise_aic_forward)
+
+model <- glm(Churn ~ ., data = training_set, family = c("binomial"))
+
+model_stepwise_aic_both <- stepAIC(model, Churn ~ ., trace = TRUE, direction = "both")
+summary(model_stepwise_aic_both)
+
+
 ##################
 ### Avec CARET ###
 ##################
@@ -309,7 +338,7 @@ fitControl <- trainControl(method = "cv", # cross-validation
 
 grid_search <- expand.grid(mtry = c(7:15), 
                            splitrule = c("gini", "extratrees"), 
-                           min.node.size = seq(0, 30, 5))
+                           min.node.size = seq(10, 40, 5))
 
 tic <- Sys.time()
 # Apprentissage du modèle
@@ -317,8 +346,10 @@ model_rf <- train(Churn ~ .,
                   data = training_set, 
                   method = "ranger",
                   metric = "ROC",
+                  preProcess = c("center", "scale"), 
                   trControl = fitControl,
-                  tuneGrid = grid_search)
+                  tuneGrid = grid_search,
+                  num.trees = 400)
 
 tac <- Sys.time()
 print(paste("The model training has taken ", as.character(round(difftime(tac, tic, units = "secs"), 2)), " seconds to run", sep = ""))
@@ -366,7 +397,7 @@ ggsave("Output/roc_curve.png", plot = last_plot())
 ### Métrique AUC ###
 ####################
 
-metric_auc <- c(roc_glm$auc, roc_rf$auc)
+metric_auc <- round(c(roc_glm$auc, roc_rf$auc), 2)
 
 ggplot() +
   aes(x = c("Régression Logistique", "Forêts Aléatoires"), y = metric_auc) +
