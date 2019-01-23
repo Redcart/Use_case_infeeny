@@ -9,6 +9,8 @@
 
 rm(list = ls())
 
+source("C:/Users/scorde/Desktop/Data_Science/Projets/Interne/Fonctions_package/Scripts/Script_01.R")
+
 ### Installation des packages R
 
 # install.packages("dplyr")
@@ -413,3 +415,10 @@ ggplot() +
 ggsave("Output/auc.png", plot = last_plot())
 
 
+####################
+###  Effet Lift  ###
+####################
+
+lift_effect(predictions = predictions_rf, true_labels = test_set$Churn, positive_label = "Oui")
+
+lift_curve(predictions = predictions_rf, true_labels = test_set$Churn, positive_label = "Oui")
