@@ -422,3 +422,4 @@ ggsave("Output/auc.png", plot = last_plot())
 lift_effect(predictions = predictions_rf, true_labels = test_set$Churn, positive_label = "Oui")
 
 lift_curve(predictions = predictions_rf, true_labels = test_set$Churn, positive_label = "Oui")
+
